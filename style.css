@@ -1,0 +1,67 @@
+:root {
+    --background: rgb(31, 31, 65);
+    --container-Background: #fff;
+    --font-color:var(--background)
+}
+*, *::before, ::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 2em;
+
+    background-color: var(--background)
+}
+
+
+
+
+.dial {
+height: 400px;
+width: 400px;
+}
+
+.timer {
+    position: relative;
+    display: inline-block;
+}
+
+.timer input {
+    display: block;
+    border: none;
+    width: 240px;
+    font-size: 90px;
+    text-align: center;
+    /* background-color: var(--container-Background); */
+    color:var(--font-color);
+  }
+
+  .timer button {
+    border: none;
+    font-size: 36px;
+    cursor: pointer;
+    color: var(--font-color);
+    /* background-color: var(--container-Background); */
+  }
+
+  
+.timer button:focus {
+    outline: none;
+  }
+  
+  .timer input:focus {
+    outline: none;
+  }
+  
+  .controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
