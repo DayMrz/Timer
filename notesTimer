@@ -1,0 +1,204 @@
+* we need to display a timer
+* animated border around the timer (it will be updating while the time goes down )
+
+possible implementation
+
+*Event listener to watch for a click on 'start' button.
+    *emit an event stating that the timer has started. 
+                           <- Watch for this event. when occurs, updated the border.
+    *Start counting down the timer
+    *Emit an event that the time gas 'ticked'
+                            <- Watch for this event. when occurs, updated the border.
+    *Each time the timer counts down, update the text.
+    *if we counted down and timer reaches 0
+        *Emit an event that the timer is done.
+                            <- Watch for this event. when occurs, updated the border.
+        *Reset internal time to get ready for another run.
+
+
+*class Timer will listen (durationInput, startButton,pauseButton)
+
+----> -----> The value of 'this'
+
+did you define the function with an arrow function? 
+     write 'console.log(this)' on the first valid line above the arrow function. Value of 'this' in the arrow function will be equal to that console.log.
+
+Dis ypu call 'bind', 'call' or 'apply' on the function when you invoked it?
+   //   'this' is equal to the first argument of 'bind', 'call' or 'apply'
+
+All other cases.
+   //  'this' is equal to whatever is to the left of the '.' in the method call.
+
+  
+   ==============================================
+
+      first way see notes
+           this.startButton.addEventListener('click', this.start);
+       }
+       start = () => {
+           this.importantMethodToCall();
+       } 
+      first solution see notes
+
+      second way see notes
+           this.startButton.addEventListener('click', this.start.bind(this));
+       }
+       start() {
+           this.importantMethodToCall();
+       }
+      second way see notes
+
+      third way see notes
+           this.startButton.addEventListener('click', this.start());
+       }
+       start = () => {
+           this.importantMethodToCall();
+       }
+      third way see notes
+
+
+       console.log('Time to start the timer!');
+       console.log(this);
+
+
+getters and setters
+
+    getTime() {
+        return parseFloat(this.durationInput.value);
+    }
+
+    setTime(time) {
+        this.durationInput.value = time;
+    }
+
+
+index.js
+    const durationInput = document.querySelector('#duration');
+    const startButton = document.querySelector('#start');
+    const pauseButton = document.querySelector('#pause');
+    const circle = document.querySelector('circle');
+
+    const perimeter = circle.getAttribute('r') * 2 * Math.PI;
+    circle.setAttribute('stroke-dasharray', perimeter);
+
+    const timer = new Timer(durationInput, startButton, pauseButton, {
+        onStart() {
+            console.log('Timer started')
+        },
+        onTick() {
+            console.log('Timer just ticked down') //checking if is working
+        },
+        onComplete() {
+            console.log('Timer is completed')
+        }
+
+    });
+
+
+timer.js
+        class Timer {
+        constructor(durationInput, startButton, pauseButton) {
+            this.durationInput = durationInput;
+            this.startButton = startButton;
+            this.pauseButton = pauseButton;
+
+            this.startButton.addEventListener('click', this.start);
+            this.pauseButton.addEventListener('click', this.pause);
+        }
+        start = () => {
+            this.tick();
+            this.interval = setInterval(this.tick, 1000);
+        };
+
+        pause = () => {
+            clearInterval(this.interval);
+        }
+
+        tick = () => {
+            if (this.timeRemaining <= 0) {
+                this.pauseButton(); -->to make it pause at 0
+
+            } else {
+                // const timeRemaining = this.timeRemaining;
+                this.timeRemaining = this.timeRemaining - 1;
+                // console.log('tick');
+            }
+        };
+
+        get timeRemaining() {
+            return parseFloat(this.durationInput.value);
+        }
+
+        set timeRemaining(time) {
+            this.durationInput.value = time;
+        }
+
+        // importantMethodToCall() {
+        //     console.log('important thing was done');
+        // }
+    }
+
+
+
+
+
+****************************************************************
+                        svg ELEMENT
+*****************************************************************
+    if something is outside to the svg we just can't see it 
+        assign hight and wide : this case 200 each 
+        it will show me a square 
+
+axis = dimensions -> origin is always at the top left
+
+Y axis = increases from top to bottom 
+X Axis = increases from left to right
+
+circle = r -> radio 
+        cx and cy are the central points to the circle (helps to position)
+
+        details about circles:
+        *Stroke = border
+        *Fill = content
+        *Stroke-dasharray = specify the length or the dash around the diameter to the circle. 
+            it can have two values. the first one corresponded to the length of the dash, the second one, the spacing between them.
+
+          to calculate the perimeter of the circle 
+          perimeter = 2*PI*r
+          //our circle: 
+          perimeter = 2*PI*90   //console:  2*Math.PI *90 / 2 = 282.74
+                    = 565 -> playing with this to get the value of dasharray.
+          Border starts here, goes clockwise
+          * stroke-dashoffset: is a presentation attribute which defines the    location along ans SVG path where the dash of a stroke will begin
+            writing the value in negative will give me the clockwise rotation.
+
+            to start the rotation from the top in this case we have to move 90  degrees or circle... 
+            to do that 
+
+          *transform rotate(value)= moves all the points of an element in the same direction and by the same amount. Translations preserves parallelism, angles and distances. 
+            this case: transform = "rotate(-90 100 100)
+                                    -90 represent the amount we want to rotate.
+                                    100 and 100 represent the original point we want to rotate 
+    change the value of stroke-dasharray
+    2*PI*r = 2*3,14259*190
+
+
+======
+circle element in js
+========
+
+        start ->    dasharray = perimeter 
+                    dashoffset = 0
+
+        End ->      dasharray = perimeter
+                    dashoffset = -1* perimeter
+
+    If perimeter of circle 100
+    and there are 50 'tick' events
+    each tick needs to adjust the off set by -1*100/50 = -2
+
+    To calculate:
+    offset = (perimeter * timeRemaining) / totalDuration - perimeter
+
+
+

@@ -25,6 +25,9 @@ footer {
 
 .title {
   font-size: 3em;
+  letter-spacing: .5em;
+  text-align: center;
+  background-color: rgba(105, 61, 35, 0.26);
 }
 
 .dial {
@@ -85,18 +88,6 @@ footer {
     color: hsl(0, 0%, 100%);
   }
   
-
-
-  
-
-    
-
-    
-
-    
-
-  
-    
     .footer {
       font-size: 2rem;
       color: black;
