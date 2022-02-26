@@ -18,30 +18,29 @@
 
 <body>
 
-    <div class="card">
-        <div class="card-content">
-            <div class="content">
-                <div class="timer">
-                    <div class="controls">
-                        <input id="duration" value="30">
-                        <div>
-                            <button id="start"><i class="fas fa-play"></i></button>
-                            <button id="pause"><i class="fas fa-pause"></i></button>
-                        </div>
-                    </div>
-                    <svg class="dial">
-                        <circle r="190" cx="200" cy="200" fill="transparent" stroke="rgb(31, 31, 65)" stroke-width="5">
-                        </circle>
-                        <circle id="animation" r="190" cx="200" cy="200" fill="transparent" stroke="cyan"
-                            stroke-width="15" transform="rotate(-90 200 200)" />
-                    </svg>
-                </div>
+    <h1 class="title">Timer</h1>
+
+    <div class="timer">
+        <div class="controls">
+            <input id="duration" value="30">
+            <div>
+                <button id="start"><i class="fas fa-play"></i></button>
+                <button id="pause"><i class="fas fa-pause"></i></button>
             </div>
         </div>
+        <svg class="dial">
+            <circle r="190" cx="200" cy="200" fill="transparent" stroke="rgb(31, 31, 65)" stroke-width="5">
+            </circle>
+            <circle id="animation" r="190" cx="200" cy="200" fill="transparent" stroke="cyan"
+                stroke-width="15" transform="rotate(-90 200 200)" />
+        </svg>
     </div>
-    <div class="container">
+</div>
 
-    </div>
+    <footer>
+        <p class="description">Build By Day ✌</p>
+    </footer>
+
 
 
     <script src="timer.js"></script>
@@ -50,5 +49,3 @@
 </body>
 
 </html>
-<!-- <i class="fas fa-play"></i>
-<i class="fas fa-pause"></i> -->
